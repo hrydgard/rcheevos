@@ -123,13 +123,8 @@ void rc_client_log_message(const rc_client_t* client, const char* message)
 static void rc_client_log_message_va(const rc_client_t* client, const char* format, va_list args)
 {
   if (client->callbacks.log_call) {
-    char buffer[256];
-
-#ifdef __STDC_WANT_SECURE_LIB__
-    vsprintf_s(buffer, sizeof(buffer), format, args);
-#else
-    vsprintf(buffer, format, args);
-#endif
+    char buffer[2048];
+    vsnprintf(buffer, sizeof(buffer), format, args);
 
     client->callbacks.log_call(buffer, client);
   }
