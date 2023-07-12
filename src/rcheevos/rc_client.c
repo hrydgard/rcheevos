@@ -1862,9 +1862,10 @@ rc_client_async_handle_t* rc_client_begin_identify_and_load_game(rc_client_t* cl
   load_state->client = client;
   load_state->callback = callback;
   load_state->callback_userdata = callback_userdata;
-  rc_hash_initialize_iterator(&load_state->hash_iterator, file_path, data, data_size);
 
   if (console_id == RC_CONSOLE_UNKNOWN) {
+    rc_hash_initialize_iterator(&load_state->hash_iterator, file_path, data, data_size);
+
     if (!rc_hash_iterate(hash, &load_state->hash_iterator)) {
       rc_client_load_error(load_state, RC_INVALID_STATE, "hash generation failed");
       return NULL;
